@@ -1,0 +1,15 @@
+{
+    "nombreApp": "Registro Básico",
+    "rutas": [
+        {
+            "ruta": "register",
+            "icon": "input",
+            "texto": "Registro Usuario"
+        },
+        {
+            "ruta": "photos",
+            "icon": "list",
+            "texto": "Album de fotos"
+        }
+    ]
+}

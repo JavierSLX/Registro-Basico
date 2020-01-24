@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class InputDart
 {
-  Widget getTextField({bool isFocus = false, int counter = 0, String hint, String etiqueta, String ayuda, void Function(String) callback, int maximo = 0})
+  Widget getTextField({bool isFocus = false, int counter = 0, String hint, String etiqueta, String ayuda, void Function(String) callback, TextEditingController controlador, int maximo = 0, bool enabled = true})
   {
     return TextField(
+      //Habilita o deshabilita el control
+      enabled: enabled,
+      //Controlador del widget
+      controller: controlador != null ? controlador : null,
       //Se pone el foco al iniciar
       autofocus: isFocus,
       //Capitalizacion de las palabras que se colocan

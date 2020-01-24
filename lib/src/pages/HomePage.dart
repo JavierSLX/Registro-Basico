@@ -44,7 +44,10 @@ class HomePage extends StatelessWidget {
         title: Text(opt["texto"]),
         leading: getIcon(opt["icon"]),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue,),
-        onTap: null,
+        onTap: (){
+          //Navega a las rutas que contiene el archivo de rutas
+          Navigator.pushNamed(context, opt["ruta"]);
+        },
       );
 
       //Agrega los widgets a la lista de opciones

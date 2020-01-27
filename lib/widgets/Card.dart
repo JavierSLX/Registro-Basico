@@ -2,24 +2,38 @@ import 'package:flutter/material.dart';
 
 class CardDart
 {
-  Widget getCard()
+  Widget getCard({String nombre, String telefono, String email, String imagen})
   {
     Widget card = Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Row(
         children: <Widget>[
-          //Widget que permite mostrar una imagen en lo que se carga otra
-          FadeInImage(
-            image: NetworkImage("https://miro.medium.com/max/4320/0*QNdQhs_T3ffa6B0m.jpeg"),
-            placeholder: AssetImage("assets/loading_2.gif"),
-            fadeInDuration: Duration(milliseconds: 200),
-            height: 300,
-            fit: BoxFit.cover,
-          ),
           Container(
-            //Da un margen al contenedor
+            child: FadeInImage(
+              image: NetworkImage(imagen),
+              placeholder: AssetImage("assets/loading_2.gif"),
+              fadeInDuration: Duration(milliseconds: 200),
+              width: 150,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
             padding: EdgeInsets.all(10),
-            child: Text("Solo es un ejemplo"),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                child: Text("Nombre: $nombre"),
+                padding: EdgeInsets.all(5),
+              ),
+              Container(
+                child: Text("Teléfono: $telefono"),
+                padding: EdgeInsets.all(5),
+              ),
+              Container(
+                child: Text("Email: $email"),
+                padding: EdgeInsets.all(5),
+              )
+            ],
           )
         ],
       ),
@@ -31,7 +45,7 @@ class CardDart
       child: Container(
         //Borde del contenedor
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(10),
           color: Colors.white,
           //Simula la sombra de la elevacion
           boxShadow: <BoxShadow>[

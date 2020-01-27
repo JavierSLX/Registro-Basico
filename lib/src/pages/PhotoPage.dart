@@ -17,7 +17,12 @@ class _PhotoPageState extends State<PhotoPage> {
         title: Text("Album de fotos"),
         centerTitle: true,
       ),
-      body: Center(child: card.getCard()),
+      body: Center(child: card.getCard(
+        nombre: "Javier Serrano Lule",
+        telefono: "4612578406",
+        email: "jserranolule@gmail.com",
+        imagen: "https://avatars3.githubusercontent.com/u/21322683?s=460&v=4"
+      )),
     );
   }
 }

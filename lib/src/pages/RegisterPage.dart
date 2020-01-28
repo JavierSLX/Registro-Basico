@@ -17,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String correo = "";
   String imagen = "";
   bool isImage = true;
+  bool isLoading = false;
 
   //Lista de usuarios
   List<Usuario> usuarios = new List();
@@ -33,7 +34,12 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Padding(
         padding: EdgeInsets.all(15),
         //Agrega un scroll a la columna de elementos
-        child: getForm(context),
+        child: Stack(
+          children: <Widget>[
+            getForm(context),
+            crearLoading()
+          ],
+        ),
       )
     );
   }
@@ -110,8 +116,8 @@ class _RegisterPageState extends State<RegisterPage> {
               Usuario usuario = await getUsuario(context);
 
               setState(() {
-              //Agrega al usuario a la lista
-              usuarios.add(usuario);
+                //Agrega al usuario a la lista
+                usuarios.add(usuario);
               });
             },
           ),
@@ -144,17 +150,31 @@ class _RegisterPageState extends State<RegisterPage> {
   {
     Usuario usuario;
 
-    if(nombre.length == 0 || telefono.length == 0 || correo.length == 0 || imagen.length == 0)
+    if(nombre.length == 0 || telefono.length == 0 || correo.length == 0 || (imagen.length == 0 && isImage))
     {
       mostrarAlerta(context, false, "Coloque todos los datos");
       return null;
     }
     else
     {
-      usuario = new Usuario(nombre, telefono, correo, imagen);
+      //Muestra el loading
+      setState(() {
+        isLoading = true;
+        
+        if(!isImage)
+          imagen = null;
+        
+        usuario = new Usuario(nombre, telefono, correo, imagen);
+      });
 
       //Regresa el futuro del usuario
-      return Future.delayed(Duration(seconds: 0), () {
+      return Future.delayed(Duration(seconds: 3), () {
+
+        //Quita el loading
+        setState(() {
+          isLoading = false;
+        });
+
         mostrarAlerta(context, true, "Guardado correcto");
 
         return usuario;
@@ -176,5 +196,13 @@ class _RegisterPageState extends State<RegisterPage> {
         return dialog.getAlertDialogCorrect(isCorrect, message);
       }
     );
+  }
+
+  Widget crearLoading() {
+    //Si esta cargando regresa un progress y si no un contenedor vacio
+    if(isLoading)
+      return Center(child: CircularProgressIndicator(backgroundColor: Colors.white));
+    else
+      return Container();
   }
 }

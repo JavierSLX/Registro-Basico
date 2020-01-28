@@ -9,13 +9,24 @@ class CardDart
       child: Row(
         children: <Widget>[
           Container(
-            child: FadeInImage(
+            //Si hay un enlace en la imagen la carga y si no, carga una por default
+            child: usuario.imagen != null ? FadeInImage(
               image: NetworkImage(usuario.imagen),
               placeholder: AssetImage("assets/loading_2.gif"),
               fadeInDuration: Duration(milliseconds: 200),
               width: 150,
               height: 100,
               fit: BoxFit.cover,
+            ) : Container(
+              width: 150,
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/user.png"),
+                  fit: BoxFit.fill
+                ),
+                shape: BoxShape.rectangle
+              ),
             ),
             padding: EdgeInsets.all(10),
           ),

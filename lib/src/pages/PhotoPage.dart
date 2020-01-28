@@ -16,7 +16,7 @@ class _PhotoPageState extends State<PhotoPage> {
       appBar: AppBar(
         title: Text("Album de fotos"),
         centerTitle: true,
-      )
+      ),
     );
   }
 }

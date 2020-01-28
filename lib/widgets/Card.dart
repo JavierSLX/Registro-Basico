@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:registro_basico/model/Usuario.dart';
 
 class CardDart
 {
-  Widget getCard({String nombre, String telefono, String email, String imagen})
+  Widget getCard(Usuario usuario)
   {
     Widget card = Container(
       child: Row(
         children: <Widget>[
           Container(
             child: FadeInImage(
-              image: NetworkImage(imagen),
+              image: NetworkImage(usuario.imagen),
               placeholder: AssetImage("assets/loading_2.gif"),
               fadeInDuration: Duration(milliseconds: 200),
               width: 150,
@@ -22,15 +23,15 @@ class CardDart
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                child: Text("Nombre: $nombre"),
+                child: Text("Nombre: ${usuario.nombre}"),
                 padding: EdgeInsets.all(5),
               ),
               Container(
-                child: Text("Teléfono: $telefono"),
+                child: Text("Teléfono: ${usuario.telefono}"),
                 padding: EdgeInsets.all(5),
               ),
               Container(
-                child: Text("Email: $email"),
+                child: Text("Email: ${usuario.correo}", softWrap: true,),
                 padding: EdgeInsets.all(5),
               )
             ],

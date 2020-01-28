@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:registro_basico/model/Usuario.dart';
+import 'package:registro_basico/widgets/Card.dart';
 import 'package:registro_basico/widgets/Dialog.dart';
 import 'package:registro_basico/widgets/Input.dart';
 
@@ -16,6 +17,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String correo = "";
   String imagen = "";
   bool isImage = true;
+
+  //Lista de usuarios
+  List<Usuario> usuarios = new List();
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +109,31 @@ class _RegisterPageState extends State<RegisterPage> {
 
               Usuario usuario = await getUsuario(context);
 
-              print(usuario);
+              setState(() {
+              //Agrega al usuario a la lista
+              usuarios.add(usuario);
+              });
             },
-          )
+          ),
+          //La listview debe de tener un contenedor para especificar sus medidas
+          Container(
+            //Coloca todo el ancho de la pantalla
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: ListView.builder(
+              //Los elementos de la lista
+              itemCount: usuarios != null ? usuarios.length : 0,
+              //Dibuja cada elemento de la lista
+              itemBuilder: (BuildContext context, int index){
+                //Obtiene el usuario
+                Usuario usuario = usuarios[index];
+
+                //Regresa la tarjeta a mostrar
+                CardDart card = CardDart();
+                return card.getCard(usuario);
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -128,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
       usuario = new Usuario(nombre, telefono, correo, imagen);
 
       //Regresa el futuro del usuario
-      return Future.delayed(Duration(seconds: 5), () {
+      return Future.delayed(Duration(seconds: 0), () {
         mostrarAlerta(context, true, "Guardado correcto");
 
         return usuario;

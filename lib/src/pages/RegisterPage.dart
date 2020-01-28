@@ -22,6 +22,37 @@ class _RegisterPageState extends State<RegisterPage> {
   //Lista de usuarios
   List<Usuario> usuarios = new List();
 
+  //Controladores de las cajas
+  TextEditingController nombreController = new TextEditingController();
+  TextEditingController telefonoController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController imagenController = new TextEditingController();
+
+  //Da el focus a un control cuando se necesita
+  FocusNode focus;
+
+  //Inicio del ciclo de vida
+  @override
+  void initState() {
+    super.initState();
+
+    //Instancia el control del focus
+    focus = FocusNode();
+  }
+
+  //Mata los controladores al final del ciclo de vida
+  @override
+  void dispose() {
+    super.dispose();
+
+    nombreController.dispose();
+    telefonoController.dispose();
+    emailController.dispose();
+    imagenController.dispose();
+
+    focus.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -55,6 +86,8 @@ class _RegisterPageState extends State<RegisterPage> {
         children: <Widget>[
           //Crea un TextField personalizado para el nombre
           input.getTextField(
+            controlador: nombreController,
+            focusNode: focus,
             isFocus: true, 
             hint: "Coloque su nombre",
             etiqueta: "Nombre",
@@ -63,6 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(height: 10,),
           //Crea un TextField personalizado para el telefono
           input.getTextField(
+            controlador: telefonoController,
             counter: count,
             hint: "Coloque su número telefónico",
             etiqueta: "Teléfono",
@@ -78,6 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(height: 10,),
           //Crea un TextField personalizado para el correo
           input.getTextField(
+            controlador: emailController,
             hint: "Coloque su correo electrónico",
             etiqueta: "Email",
             callback: (texto) => correo = texto
@@ -85,6 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(height: 10,),
           //Crea un TextField personalizado para la imagen
           input.getTextField(
+            controlador: imagenController,
             enabled: isImage,
             hint: "Coloque la dirección de su imagen",
             etiqueta: "Imagen",
@@ -160,7 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
       //Muestra el loading
       setState(() {
         isLoading = true;
-        
+
         if(!isImage)
           imagen = null;
         
@@ -173,6 +209,15 @@ class _RegisterPageState extends State<RegisterPage> {
         //Quita el loading
         setState(() {
           isLoading = false;
+
+          //Limpia las cajas de texto
+          nombreController.text = "";
+          telefonoController.text = "";
+          emailController.text = "";
+          imagenController.text = "";
+
+          //Le da el focus al widget del nombre
+          FocusScope.of(context).requestFocus(focus);
         });
 
         mostrarAlerta(context, true, "Guardado correcto");

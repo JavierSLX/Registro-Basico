@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class InputDart
 {
-  Widget getTextField({bool isFocus = false, int counter = 0, String hint, String etiqueta, String ayuda, void Function(String) callback, TextEditingController controlador, int maximo = 0, bool enabled = true})
+  Widget getTextField({bool isFocus = false, int counter = 0, String hint, String etiqueta, String ayuda, void Function(String) callback, TextEditingController controlador, FocusNode focusNode, int maximo = 0, bool enabled = true})
   {
     return TextField(
+      //Permite controlar el focus en eventos
+      focusNode: focusNode != null ? focusNode : null,
       //Habilita o deshabilita el control
       enabled: enabled,
       //Controlador del widget
